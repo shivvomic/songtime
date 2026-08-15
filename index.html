@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050608"
+    >
+
+    <title>SHIVAM — After Hours</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+
+    <div class="background">
+
+        <div
+            class="background-image"
+            id="backgroundA"
+        ></div>
+
+        <div
+            class="background-image"
+            id="backgroundB"
+        ></div>
+
+        <div class="background-overlay"></div>
+
+        <div class="background-vignette"></div>
+
+    </div>
+
+
+    <!-- TOP BAR -->
+
+    <header class="top-bar">
+
+        <div class="brand">
+            SHIVAM<span>.</span>
+        </div>
+
+        <div class="top-center">
+
+            <span class="live-dot"></span>
+
+            <span id="time">
+                12:00 AM
+            </span>
+
+            <span class="separator">
+                /
+            </span>
+
+            <span>
+                AFTER HOURS
+            </span>
+
+        </div>
+
+        <div class="image-counter">
+
+            <span id="artworkNumber">
+                01
+            </span>
+
+            <span class="counter-line"></span>
+
+            <span id="artworkTotal">
+                01
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="screen">
+
+        <!-- LEFT SIDE -->
+
+        <section class="left-content">
+
+            <div class="eyebrow">
+                STUDENT / DREAMER / BUILDER
+            </div>
+
+            <div class="quote-area">
+
+                <span class="quote-mark">
+                    “
+                </span>
+
+                <p id="quote">
+                    One more song. Then I'll sleep.
+                </p>
+
+            </div>
+
+            <div class="meta">
+
+                <span>
+                    HEADPHONES ON
+                </span>
+
+                <span>
+                    •
+                </span>
+
+                <span>
+                    WORLD OFF
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- MUSIC PLAYER -->
+
+        <section
+            class="music-player"
+            id="musicPlayer"
+        >
+
+            <div class="glass-light"></div>
+
+
+            <!-- VINYL -->
+
+            <div class="player-disc">
+
+                <div class="disc">
+
+                    <div class="disc-groove groove-one"></div>
+
+                    <div class="disc-groove groove-two"></div>
+
+                    <div class="disc-groove groove-three"></div>
+
+                    <div class="disc-center">
+                        <span>SHIVAM</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SONG INFO -->
+
+            <div class="player-info">
+
+                <div class="player-kicker">
+                    NOW PLAYING
+                </div>
+
+                <div
+                    class="track-name"
+                    id="trackName"
+                >
+                    SHIVAM
+                </div>
+
+                <div
+                    class="track-status"
+                    id="trackStatus"
+                >
+                    READY
+                </div>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div
+                class="progress-container"
+                id="progressContainer"
+            >
+
+                <div
+                    class="progress"
+                    id="progress"
+                ></div>
+
+            </div>
+
+
+            <!-- CONTROLS -->
+
+            <div class="controls">
+
+                <button
+                    id="previous"
+                    type="button"
+                    aria-label="Previous song"
+                >
+                    ‹‹
+                </button>
+
+                <button
+                    id="play"
+                    class="play-button"
+                    type="button"
+                    aria-label="Play or pause"
+                >
+                    ▶
+                </button>
+
+                <button
+                    id="next"
+                    type="button"
+                    aria-label="Next song"
+                >
+                    ››
+                </button>
+
+            </div>
+
+
+            <!-- PLAYLIST SELECTOR -->
+
+            <button
+                class="selector-button"
+                id="playlistSelector"
+                type="button"
+            >
+
+                <span>♫</span>
+
+                <span
+                    id="selectedPlaylistName"
+                >
+                    SHIVAM
+                </span>
+
+                <span class="selector-arrow">
+                    ↑
+                </span>
+
+            </button>
+
+
+            <!-- PLAYLIST MENU -->
+
+            <div
+                class="selector-menu playlist-menu"
+                id="playlistMenu"
+            >
+
+                <div class="menu-header">
+
+                    <span>
+                        PLAYLISTS
+                    </span>
+
+                    <span id="playlistCount">
+                        0
+                    </span>
+
+                </div>
+
+                <div
+                    class="menu-items"
+                    id="playlistItems"
+                ></div>
+
+            </div>
+
+
+            <!-- SONG SELECTOR -->
+
+            <button
+                class="selector-button song-selector"
+                id="songSelector"
+                type="button"
+            >
+
+                <span>☷</span>
+
+                <span>
+                    SELECT SONG
+                </span>
+
+                <span class="selector-arrow">
+                    ↑
+                </span>
+
+            </button>
+
+
+            <!-- SONG MENU -->
+
+            <div
+                class="selector-menu song-menu"
+                id="songMenu"
+            >
+
+                <div class="menu-header">
+
+                    <span>
+                        SONGS
+                    </span>
+
+                    <span id="songCount">
+                        0
+                    </span>
+
+                </div>
+
+                <div
+                    class="menu-items"
+                    id="songItems"
+                ></div>
+
+            </div>
+
+
+            <!-- CURRENT PLAYLIST -->
+
+            <div
+                class="playlist-name"
+                id="playlistName"
+            >
+                SHIVAM
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- BOTTOM -->
+
+    <div class="bottom-info">
+
+        <span>
+            LATE NIGHT SESSION
+        </span>
+
+        <span class="bottom-line"></span>
+
+        <span id="imageName">
+            MEMORY_01
+        </span>
+
+    </div>
+
+
+    <!-- HIDDEN YOUTUBE PLAYER -->
+
+    <div id="youtube-player"></div>
+
+
+    <script src="./js/app.js"></script>
+
+</body>
+</html>
