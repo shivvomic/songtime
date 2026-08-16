@@ -198,7 +198,9 @@ let currentTrack = 0;
 
 let currentPlaylistId = null;
 
-let playingOneOff = false;
+let currentSongs = [];
+
+let playlistRequestId = 0;
 
 let currentArtwork = 0;
 
@@ -379,7 +381,106 @@ function initializePlaylist() {
 }
 
 /* =========================================================
-   BUILD PLAYLIST SELECTOR
+   LOAD SONGS FOR A PLAYLIST
+
+   This is the single source of truth for "what songs
+   are in the current playlist." Both the song menu UI
+   and actual playback (playTrack) read from currentSongs,
+   so they can never disagree with each other.
+
+   A request-id guard protects against race conditions:
+   if the user switches playlists again before this fetch
+   finishes, the stale/late response is discarded instead
+   of overwriting the newer selection.
+========================================================= */
+
+async function loadPlaylistSongs(playlistId) {
+  const requestId = ++playlistRequestId;
+
+  try {
+    const response = await fetch(`/api/youtube?playlist=${playlistId}`);
+
+    const songs = await response.json();
+
+    /*
+           A newer request started while we were
+           waiting — ignore this now-stale result.
+        */
+
+    if (requestId !== playlistRequestId) {
+      return;
+    }
+
+    if (!Array.isArray(songs)) {
+      currentSongs = [];
+
+      songItems.innerHTML = "";
+
+      songCount.textContent = "ERROR";
+
+      return;
+    }
+
+    currentSongs = songs;
+
+    renderSongList(songs);
+  } catch (error) {
+    if (requestId !== playlistRequestId) {
+      return;
+    }
+
+    console.error("Song loading failed:", error);
+
+    currentSongs = [];
+
+    songCount.textContent = "ERROR";
+  }
+}
+
+function renderSongList(songs) {
+  songItems.innerHTML = "";
+
+  songCount.textContent = songs.length;
+
+  if (songSearchInput) {
+    songSearchInput.value = "";
+  }
+
+  songs.forEach(function (song, index) {
+    const button = document.createElement("button");
+
+    button.type = "button";
+
+    button.className = "menu-item";
+
+    button.dataset.title = song.title.toLowerCase();
+
+    button.innerHTML = `
+
+                <span class="menu-number">
+                    ${String(index + 1).padStart(2, "0")}
+                </span>
+
+                <span class="menu-title">
+                    ${escapeHTML(song.title)}
+                </span>
+
+            `;
+
+    button.addEventListener("click", function (event) {
+      event.stopPropagation();
+
+      playTrack(index);
+    });
+
+    songItems.appendChild(button);
+  });
+
+  updateSongActive();
+}
+
+/* =========================================================
+   BUILD SONG SELECTOR (for the currently active playlist)
 ========================================================= */
 
 async function buildSongSelector() {
@@ -389,61 +490,17 @@ async function buildSongSelector() {
 
   const valid = getValidPlaylists();
 
+  if (!valid[currentPlaylist]) {
+    return;
+  }
+
   const playlistId = getPlaylistId(valid[currentPlaylist].url);
 
   if (!playlistId) {
     return;
   }
 
-  try {
-    const response = await fetch(`/api/youtube?playlist=${playlistId}`);
-
-    const songs = await response.json();
-
-    songItems.innerHTML = "";
-
-    songCount.textContent = songs.length;
-
-    if (songSearchInput) {
-      songSearchInput.value = "";
-    }
-
-    songs.forEach(function (song, index) {
-      const button = document.createElement("button");
-
-      button.type = "button";
-
-      button.className = "menu-item";
-
-      button.dataset.title = song.title.toLowerCase();
-
-      button.innerHTML = `
-
-                    <span class="menu-number">
-                        ${String(index + 1).padStart(2, "0")}
-                    </span>
-
-                    <span class="menu-title">
-                        ${escapeHTML(song.title)}
-                    </span>
-
-                `;
-
-      button.addEventListener("click", function (event) {
-        event.stopPropagation();
-
-        playTrack(index);
-      });
-
-      songItems.appendChild(button);
-    });
-
-    updateSongActive();
-  } catch (error) {
-    console.error("Song loading failed:", error);
-
-    songCount.textContent = "ERROR";
-  }
+  await loadPlaylistSongs(playlistId);
 }
 
 /* =========================================================
@@ -480,9 +537,14 @@ function updatePlaylistSelectorActive() {
 
 /* =========================================================
    SWITCH PLAYLIST
+
+   Fetches the new playlist's songs first, THEN starts
+   playback from that exact same fetched list — so the
+   song menu and what actually plays can never desync,
+   even if the user switches playlists rapidly.
 ========================================================= */
 
-function switchPlaylist(index) {
+async function switchPlaylist(index) {
   const valid = getValidPlaylists();
 
   if (!valid[index]) {
@@ -491,15 +553,9 @@ function switchPlaylist(index) {
 
   currentPlaylist = index;
 
-  currentTrack = 0;
-
   updatePlaylistUI();
 
   closeMenus();
-
-  if (!playerReady || !player) {
-    return;
-  }
 
   const playlistId = getPlaylistId(valid[index].url);
 
@@ -508,8 +564,6 @@ function switchPlaylist(index) {
   }
 
   currentPlaylistId = playlistId;
-
-  playingOneOff = false;
 
   trackStatus.textContent = "LOADING PLAYLIST";
 
@@ -523,27 +577,17 @@ function switchPlaylist(index) {
 
   resetProgress();
 
-  /*
-       Load the new YouTube playlist.
-    */
+  await loadPlaylistSongs(playlistId);
 
-  player.loadPlaylist({
-    listType: "playlist",
+  if (!currentSongs.length) {
+    trackStatus.textContent = "NO SONGS";
 
-    list: playlistId,
+    return;
+  }
 
-    index: 0,
-  });
-
-  /*
-       Give YouTube a moment to load
-       the playlist before building
-       the song selector.
-    */
-
-  setTimeout(function () {
-    buildSongSelector();
-  }, 1000);
+  if (playerReady && player) {
+    playTrack(0);
+  }
 }
 
 /* =========================================================
@@ -631,69 +675,17 @@ function playTrack(index) {
     return;
   }
 
-  /*
-       If we were playing a one-off search result,
-       the player's internal playlist is gone —
-       reload the real playlist first so playback
-       controls work correctly again.
-    */
-
-  if (playingOneOff) {
-    console.log(
-      "[songtime] Restoring playlist after search. id=",
-      currentPlaylistId,
-      "index=",
-      index,
-    );
-
-    if (!currentPlaylistId) {
-      console.log(
-        "[songtime] No currentPlaylistId set — cannot restore playlist.",
-      );
-
-      return;
-    }
-
-    playingOneOff = false;
-
-    currentTrack = index;
-
-    trackStatus.textContent = "LOADING PLAYLIST";
-
-    isPlaying = false;
-
-    musicPlayer.classList.remove("playing");
-
-    playButton.textContent = "▶";
-
-    stopProgress();
-
-    resetProgress();
-
-    player.loadPlaylist({
-      listType: "playlist",
-
-      list: currentPlaylistId,
-
-      index: index,
-    });
-
-    updateSongActive();
-
-    closeMenus();
-
-    return;
-  }
-
-  const playlist = player.getPlaylist();
-
-  if (!playlist || index < 0 || index >= playlist.length) {
+  if (!currentSongs.length || index < 0 || index >= currentSongs.length) {
     return;
   }
 
   currentTrack = index;
 
-  player.playVideoAt(index);
+  player.loadVideoById(currentSongs[index].id);
+
+  trackName.textContent = currentSongs[index].title;
+
+  trackStatus.textContent = "BUFFERING";
 
   updateSongActive();
 
@@ -706,8 +698,6 @@ function playOneOffVideo(videoId, title) {
   }
 
   currentTrack = -1;
-
-  playingOneOff = true;
 
   updateSongActive();
 
@@ -750,13 +740,7 @@ function onPlayerStateChange(event) {
 
     trackStatus.textContent = "NOW PLAYING";
 
-    const index = !playingOneOff ? player.getPlaylistIndex() : -1;
-
-    if (typeof index === "number" && index >= 0) {
-      currentTrack = index;
-
-      updateSongActive();
-    }
+    updateSongActive();
 
     updateTrackName();
 
@@ -812,6 +796,15 @@ function onPlayerStateChange(event) {
     stopProgress();
 
     resetProgress();
+
+    /*
+           We no longer rely on YouTube's internal
+           playlist auto-advance (playback is driven
+           entirely by loadVideoById), so we advance
+           to the next song ourselves.
+        */
+
+    nextTrack();
   }
 }
 
@@ -848,17 +841,14 @@ function togglePlay() {
 ========================================================= */
 
 function previousTrack() {
-  if (!playerReady || !player) {
+  if (!playerReady || !player || !currentSongs.length) {
     return;
   }
 
-  if (playingOneOff) {
-    playTrack(0);
+  const newIndex =
+    currentTrack <= 0 ? currentSongs.length - 1 : currentTrack - 1;
 
-    return;
-  }
-
-  player.previousVideo();
+  playTrack(newIndex);
 }
 
 /* =========================================================
@@ -866,17 +856,16 @@ function previousTrack() {
 ========================================================= */
 
 function nextTrack() {
-  if (!playerReady || !player) {
+  if (!playerReady || !player || !currentSongs.length) {
     return;
   }
 
-  if (playingOneOff) {
-    playTrack(0);
+  const newIndex =
+    currentTrack < 0 || currentTrack >= currentSongs.length - 1
+      ? 0
+      : currentTrack + 1;
 
-    return;
-  }
-
-  player.nextVideo();
+  playTrack(newIndex);
 }
 
 /* =========================================================
