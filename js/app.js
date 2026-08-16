@@ -101,7 +101,7 @@ const songArtwork = {
 
 const artworks = [
   "./assets/artwork/student-study.png",
-  "./assets/artwork/shivam-study-hero.png",
+  // "./assets/artwork/02.jpg",
   // "./assets/artwork/03.jpg",
   // "./assets/artwork/04.jpg",
   // "./assets/artwork/05.jpg"
@@ -639,13 +639,36 @@ function playTrack(index) {
     */
 
   if (playingOneOff) {
+    console.log(
+      "[songtime] Restoring playlist after search. id=",
+      currentPlaylistId,
+      "index=",
+      index,
+    );
+
     if (!currentPlaylistId) {
+      console.log(
+        "[songtime] No currentPlaylistId set — cannot restore playlist.",
+      );
+
       return;
     }
 
     playingOneOff = false;
 
     currentTrack = index;
+
+    trackStatus.textContent = "LOADING PLAYLIST";
+
+    isPlaying = false;
+
+    musicPlayer.classList.remove("playing");
+
+    playButton.textContent = "▶";
+
+    stopProgress();
+
+    resetProgress();
 
     player.loadPlaylist({
       listType: "playlist",
