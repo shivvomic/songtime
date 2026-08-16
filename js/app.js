@@ -21,6 +21,7 @@
 
    You can keep adding playlists.
 */
+const YOUTUBE_API_KEY = "YOUR_API_KEY";
 
 const playlists = [
 
@@ -345,69 +346,112 @@ function initializePlaylist() {
    BUILD PLAYLIST SELECTOR
 ========================================================= */
 
-function buildPlaylistSelector() {
+async function buildSongSelector() {
 
-    playlistItems.innerHTML = "";
+    if (!playerReady || !player) {
+        return;
+    }
 
 
     const valid =
         getValidPlaylists();
 
 
-    valid.forEach(
-        function (
-            playlist,
-            index
-        ) {
+    const playlistId =
+        getPlaylistId(
+            valid[currentPlaylist].url
+        );
 
-            const button =
-                document.createElement(
-                    "button"
+
+    if (!playlistId) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/youtube?playlist=${playlistId}`
+            );
+
+
+        const songs =
+            await response.json();
+
+
+        songItems.innerHTML = "";
+
+
+        songCount.textContent =
+            songs.length;
+
+
+        songs.forEach(
+            function(song, index) {
+
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "menu-item";
+
+
+                button.innerHTML = `
+
+                    <span class="menu-number">
+                        ${String(index + 1).padStart(2,"0")}
+                    </span>
+
+                    <span class="menu-title">
+                        ${escapeHTML(song.title)}
+                    </span>
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(event){
+
+                        event.stopPropagation();
+
+                        playTrack(index);
+
+                    }
                 );
 
 
-            button.type =
-                "button";
+                songItems.appendChild(
+                    button
+                );
+
+            }
+        );
 
 
-            button.className =
-                "menu-item";
+        updateSongActive();
 
 
-            button.innerHTML = `
+    } catch(error) {
 
-                <span class="menu-number">
-                    ${String(index + 1).padStart(2, "0")}
-                </span>
-
-                <span class="menu-title">
-                    ${escapeHTML(playlist.name)}
-                </span>
-
-            `;
+        console.error(
+            "Song loading failed:",
+            error
+        );
 
 
-            button.addEventListener(
-                "click",
-                function (event) {
-
-                    event.stopPropagation();
-
-                    switchPlaylist(
-                        index
-                    );
-                }
-            );
-
-
-            playlistItems.appendChild(
-                button
-            );
-        }
-    );
-
-
-    updatePlaylistSelectorActive();
+        songCount.textContent =
+            "ERROR";
+    }
 }
 
 
