@@ -1364,8 +1364,9 @@ async function runYoutubeSearch(query) {
 
                     <img
                         class="yt-result-thumb"
-                        src="${escapeHTML(result.thumbnail)}"
+                        src="${escapeHTML(result.thumbnail || "")}"
                         alt=""
+                        onerror="this.style.display='none'"
                     >
 
                     <span class="yt-result-text">
