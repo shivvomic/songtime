@@ -1,373 +1,288 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta
-        name="theme-color"
-        content="#050608"
-    >
+    <meta name="theme-color" content="#050608" />
 
     <title>SHIVAM — After Hours</title>
 
-    <link
-        rel="stylesheet"
-        href="./css/style.css"
-    >
-</head>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
 
-<body>
-
+  <body>
     <!-- BACKGROUND -->
 
     <div class="background">
+      <div class="background-image" id="backgroundA"></div>
 
-        <div
-            class="background-image"
-            id="backgroundA"
-        ></div>
+      <div class="background-image" id="backgroundB"></div>
 
-        <div
-            class="background-image"
-            id="backgroundB"
-        ></div>
+      <div class="background-overlay"></div>
 
-        <div class="background-overlay"></div>
-
-        <div class="background-vignette"></div>
-
+      <div class="background-vignette"></div>
     </div>
-
 
     <!-- TOP BAR -->
 
     <header class="top-bar">
+      <div class="brand">SHIVAM<span>.</span></div>
 
-        <div class="brand">
-            SHIVAM<span>.</span>
-        </div>
+      <div class="top-center">
+        <span> AFTER HOURS </span>
+      </div>
 
-        <div class="top-center">
+      <div class="image-counter">
+        <span id="artworkNumber"> 01 </span>
 
-            <span class="live-dot"></span>
+        <span class="counter-line"></span>
 
-            <span id="time">
-                12:00 AM
-            </span>
+        <span id="artworkTotal"> 01 </span>
 
-            <span class="separator">
-                /
-            </span>
+        <button
+          class="add-image-button"
+          id="addImageButton"
+          type="button"
+          aria-label="Add background image"
+        >
+          +
+        </button>
 
-            <span>
-                AFTER HOURS
-            </span>
-
-        </div>
-
-        <div class="image-counter">
-
-            <span id="artworkNumber">
-                01
-            </span>
-
-            <span class="counter-line"></span>
-
-            <span id="artworkTotal">
-                01
-            </span>
-
-        </div>
-
+        <input
+          type="file"
+          id="addImageInput"
+          accept="image/*"
+          multiple
+          hidden
+        />
+      </div>
     </header>
-
 
     <!-- MAIN -->
 
     <main class="screen">
+      <!-- LEFT SIDE -->
 
-        <!-- LEFT SIDE -->
+      <section class="left-content">
+        <div class="time-badge">
+          <span class="live-dot"></span>
 
-        <section class="left-content">
+          <span id="time"> 12:00 AM </span>
+        </div>
 
-            <div class="eyebrow">
-                STUDENT / DREAMER / BUILDER
+        <div class="eyebrow">STUDENT / DREAMER / BUILDER</div>
+
+        <div class="quote-area">
+          <span class="quote-mark"> “ </span>
+
+          <p id="quote">One more song. Then I'll sleep.</p>
+        </div>
+
+        <div class="meta">
+          <span> HEADPHONES ON </span>
+
+          <span> • </span>
+
+          <span> WORLD OFF </span>
+        </div>
+      </section>
+
+      <!-- MUSIC PLAYER -->
+
+      <section class="music-player" id="musicPlayer">
+        <div class="glass-light"></div>
+
+        <!-- VINYL -->
+
+        <div class="player-disc">
+          <div class="disc">
+            <div class="disc-groove groove-one"></div>
+
+            <div class="disc-groove groove-two"></div>
+
+            <div class="disc-groove groove-three"></div>
+
+            <div class="disc-center">
+              <span>SHIVAM</span>
             </div>
+          </div>
+        </div>
 
-            <div class="quote-area">
+        <!-- SONG INFO -->
 
-                <span class="quote-mark">
-                    “
-                </span>
+        <div class="player-info">
+          <div class="player-kicker">NOW PLAYING</div>
 
-                <p id="quote">
-                    One more song. Then I'll sleep.
-                </p>
+          <div class="track-name" id="trackName">SHIVAM</div>
 
-            </div>
+          <div class="track-status" id="trackStatus">READY</div>
+        </div>
 
-            <div class="meta">
+        <!-- PROGRESS -->
 
-                <span>
-                    HEADPHONES ON
-                </span>
+        <div class="progress-container" id="progressContainer">
+          <div class="progress" id="progress"></div>
+        </div>
 
-                <span>
-                    •
-                </span>
+        <!-- CONTROLS -->
 
-                <span>
-                    WORLD OFF
-                </span>
+        <div class="controls">
+          <button id="previous" type="button" aria-label="Previous song">
+            ‹‹
+          </button>
 
-            </div>
+          <button
+            id="play"
+            class="play-button"
+            type="button"
+            aria-label="Play or pause"
+          >
+            ▶
+          </button>
 
-        </section>
+          <button id="next" type="button" aria-label="Next song">››</button>
+        </div>
 
+        <!-- PLAYLIST SELECTOR -->
 
-        <!-- MUSIC PLAYER -->
+        <button class="selector-button" id="playlistSelector" type="button">
+          <span>♫</span>
 
-        <section
-            class="music-player"
-            id="musicPlayer"
+          <span id="selectedPlaylistName" class="selector-label"> SHIVAM </span>
+
+          <span class="selector-arrow"> ↑ </span>
+        </button>
+
+        <!-- PLAYLIST MENU -->
+
+        <div class="selector-menu playlist-menu" id="playlistMenu">
+          <div class="menu-header">
+            <span> PLAYLISTS </span>
+
+            <span id="playlistCount"> 0 </span>
+          </div>
+
+          <div class="menu-items" id="playlistItems"></div>
+
+          <button class="menu-add-button" id="addPlaylistButton" type="button">
+            + ADD PLAYLIST
+          </button>
+
+          <div class="menu-add-form" id="addPlaylistForm">
+            <input
+              type="text"
+              id="newPlaylistName"
+              placeholder="PLAYLIST NAME"
+              autocomplete="off"
+            />
+
+            <input
+              type="text"
+              id="newPlaylistUrl"
+              placeholder="YOUTUBE PLAYLIST URL"
+              autocomplete="off"
+            />
+
+            <button type="button" id="confirmAddPlaylist">ADD</button>
+          </div>
+        </div>
+
+        <!-- SONG SELECTOR -->
+
+        <button
+          class="selector-button song-selector"
+          id="songSelector"
+          type="button"
         >
+          <span>☷</span>
 
-            <div class="glass-light"></div>
+          <span class="selector-label"> SELECT SONG </span>
 
+          <span class="selector-arrow"> ↑ </span>
+        </button>
 
-            <!-- VINYL -->
+        <!-- SONG MENU -->
 
-            <div class="player-disc">
+        <div class="selector-menu song-menu" id="songMenu">
+          <div class="menu-header">
+            <span> SONGS </span>
 
-                <div class="disc">
+            <span id="songCount"> 0 </span>
+          </div>
 
-                    <div class="disc-groove groove-one"></div>
+          <div class="menu-search">
+            <span class="menu-search-icon"> ⌕ </span>
 
-                    <div class="disc-groove groove-two"></div>
+            <input
+              type="text"
+              id="songSearchInput"
+              placeholder="SEARCH SONGS"
+              autocomplete="off"
+            />
+          </div>
 
-                    <div class="disc-groove groove-three"></div>
+          <div class="menu-items" id="songItems"></div>
+        </div>
 
-                    <div class="disc-center">
-                        <span>SHIVAM</span>
-                    </div>
+        <!-- YOUTUBE SEARCH SELECTOR -->
 
-                </div>
+        <button
+          class="selector-button youtube-search-selector"
+          id="youtubeSearchSelector"
+          type="button"
+        >
+          <span>⌕</span>
 
-            </div>
+          <span class="selector-label"> SEARCH YOUTUBE </span>
 
+          <span class="selector-arrow"> ↑ </span>
+        </button>
 
-            <!-- SONG INFO -->
+        <!-- YOUTUBE SEARCH MENU -->
 
-            <div class="player-info">
+        <div class="selector-menu youtube-search-menu" id="youtubeSearchMenu">
+          <div class="menu-header">
+            <span> SEARCH YOUTUBE </span>
 
-                <div class="player-kicker">
-                    NOW PLAYING
-                </div>
+            <span id="youtubeSearchStatus"></span>
+          </div>
 
-                <div
-                    class="track-name"
-                    id="trackName"
-                >
-                    SHIVAM
-                </div>
+          <div class="menu-search">
+            <span class="menu-search-icon"> ⌕ </span>
 
-                <div
-                    class="track-status"
-                    id="trackStatus"
-                >
-                    READY
-                </div>
+            <input
+              type="text"
+              id="youtubeSearchInput"
+              placeholder="SEARCH ANY SONG ON YOUTUBE"
+              autocomplete="off"
+            />
+          </div>
 
-            </div>
+          <div class="menu-items" id="youtubeSearchResults"></div>
+        </div>
 
+        <!-- CURRENT PLAYLIST -->
 
-            <!-- PROGRESS -->
-
-            <div
-                class="progress-container"
-                id="progressContainer"
-            >
-
-                <div
-                    class="progress"
-                    id="progress"
-                ></div>
-
-            </div>
-
-
-            <!-- CONTROLS -->
-
-            <div class="controls">
-
-                <button
-                    id="previous"
-                    type="button"
-                    aria-label="Previous song"
-                >
-                    ‹‹
-                </button>
-
-                <button
-                    id="play"
-                    class="play-button"
-                    type="button"
-                    aria-label="Play or pause"
-                >
-                    ▶
-                </button>
-
-                <button
-                    id="next"
-                    type="button"
-                    aria-label="Next song"
-                >
-                    ››
-                </button>
-
-            </div>
-
-
-            <!-- PLAYLIST SELECTOR -->
-
-            <button
-                class="selector-button"
-                id="playlistSelector"
-                type="button"
-            >
-
-                <span>♫</span>
-
-                <span
-                    id="selectedPlaylistName"
-                >
-                    SHIVAM
-                </span>
-
-                <span class="selector-arrow">
-                    ↑
-                </span>
-
-            </button>
-
-
-            <!-- PLAYLIST MENU -->
-
-            <div
-                class="selector-menu playlist-menu"
-                id="playlistMenu"
-            >
-
-                <div class="menu-header">
-
-                    <span>
-                        PLAYLISTS
-                    </span>
-
-                    <span id="playlistCount">
-                        0
-                    </span>
-
-                </div>
-
-                <div
-                    class="menu-items"
-                    id="playlistItems"
-                ></div>
-
-            </div>
-
-
-            <!-- SONG SELECTOR -->
-
-            <button
-                class="selector-button song-selector"
-                id="songSelector"
-                type="button"
-            >
-
-                <span>☷</span>
-
-                <span>
-                    SELECT SONG
-                </span>
-
-                <span class="selector-arrow">
-                    ↑
-                </span>
-
-            </button>
-
-
-            <!-- SONG MENU -->
-
-            <div
-                class="selector-menu song-menu"
-                id="songMenu"
-            >
-
-                <div class="menu-header">
-
-                    <span>
-                        SONGS
-                    </span>
-
-                    <span id="songCount">
-                        0
-                    </span>
-
-                </div>
-
-                <div
-                    class="menu-items"
-                    id="songItems"
-                ></div>
-
-            </div>
-
-
-            <!-- CURRENT PLAYLIST -->
-
-            <div
-                class="playlist-name"
-                id="playlistName"
-            >
-                SHIVAM
-            </div>
-
-        </section>
-
+        <div class="playlist-name" id="playlistName">SHIVAM</div>
+      </section>
     </main>
-
 
     <!-- BOTTOM -->
 
     <div class="bottom-info">
+      <span> LATE NIGHT SESSION </span>
 
-        <span>
-            LATE NIGHT SESSION
-        </span>
+      <span class="bottom-line"></span>
 
-        <span class="bottom-line"></span>
-
-        <span id="imageName">
-            MEMORY_01
-        </span>
-
+      <span id="imageName"> MEMORY_01 </span>
     </div>
-
 
     <!-- HIDDEN YOUTUBE PLAYER -->
 
     <div id="youtube-player"></div>
 
-
     <script src="./js/app.js"></script>
-
-</body>
+  </body>
 </html>

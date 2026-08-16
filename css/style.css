@@ -1,1397 +1,1709 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-    --text: #f3f0e9;
-    --muted: rgba(243, 240, 233, .58);
-    --warm: #d7a66a;
-    --warm-light: #ebc48f;
+  --text: #f3f0e9;
+  --muted: rgba(243, 240, 233, 0.58);
+  --warm: #d7a66a;
+  --warm-light: #ebc48f;
 
-    --glass: rgba(255, 255, 255, .012);
-    --border: rgba(255, 255, 255, .18);
+  --glass: rgba(255, 255, 255, 0.012);
+  --border: rgba(255, 255, 255, 0.18);
 }
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 
-    background: #050608;
-    color: var(--text);
+  background: #050608;
+  color: var(--text);
 
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
 body {
-    position: relative;
+  position: relative;
 }
 
 button {
-    font: inherit;
+  font: inherit;
 }
 
 button:focus-visible {
-    outline: 1px solid var(--warm);
-    outline-offset: 3px;
+  outline: 1px solid var(--warm);
+  outline-offset: 3px;
 }
 
 ::selection {
-    background: var(--warm);
-    color: #111;
+  background: var(--warm);
+  color: #111;
 }
-
 
 /* =====================================================
    BACKGROUND
 ===================================================== */
 
 .background {
-    position: fixed;
-    inset: 0;
+  position: fixed;
+  inset: 0;
 
-    z-index: 0;
+  z-index: 0;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    background: #050608;
+  background: #050608;
 }
 
 .background-image {
-    position: absolute;
-    inset: -3%;
+  position: absolute;
+  inset: -3%;
 
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 
-    opacity: 0;
+  opacity: 0;
 
-    transform: scale(1.06);
+  transform: scale(1.06);
 
-    transition:
-        opacity 1.8s ease,
-        transform 12s ease;
+  transition:
+    opacity 1.8s ease,
+    transform 12s ease;
 }
 
 .background-image.active {
-    opacity: 1;
-    transform: scale(1);
+  opacity: 1;
+  transform: scale(1);
 }
-
 
 /* =====================================================
    BACKGROUND OVERLAY
 ===================================================== */
 
 .background-overlay {
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 
-    z-index: 2;
+  z-index: 2;
 
-    pointer-events: none;
+  pointer-events: none;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(3,4,7,.68),
-            rgba(3,4,7,.25) 42%,
-            rgba(3,4,7,.10) 70%,
-            rgba(3,4,7,.40)
-        );
+  background: linear-gradient(
+    90deg,
+    rgba(3, 4, 7, 0.68),
+    rgba(3, 4, 7, 0.25) 42%,
+    rgba(3, 4, 7, 0.1) 70%,
+    rgba(3, 4, 7, 0.4)
+  );
 }
 
 .background-overlay::after {
-    content: "";
+  content: "";
 
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 
-    background:
-        linear-gradient(
-            0deg,
-            rgba(3,4,7,.65),
-            transparent 45%
-        );
+  background: linear-gradient(0deg, rgba(3, 4, 7, 0.65), transparent 45%);
 }
 
 .background-vignette {
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 
-    z-index: 3;
+  z-index: 3;
 
-    pointer-events: none;
+  pointer-events: none;
 
-    box-shadow:
-        inset 0 0 180px rgba(0,0,0,.58);
+  box-shadow: inset 0 0 180px rgba(0, 0, 0, 0.58);
 }
-
 
 /* =====================================================
    TOP BAR
 ===================================================== */
 
 .top-bar {
-    position: fixed;
+  position: fixed;
 
-    top: 0;
-    left: 0;
+  top: 0;
+  left: 0;
 
-    width: 100%;
-    height: 82px;
+  width: 100%;
+  height: 82px;
 
-    z-index: 30;
+  z-index: 30;
 
-    padding: 0 42px;
+  padding: 0 42px;
 
-    display: grid;
+  display: grid;
 
-    grid-template-columns:
-        1fr auto 1fr;
+  grid-template-columns: 1fr auto 1fr;
 
-    align-items: center;
+  align-items: center;
 
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.09);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(3,4,7,.25),
-            transparent
-        );
+  background: linear-gradient(180deg, rgba(3, 4, 7, 0.25), transparent);
 }
 
 .brand {
-    justify-self: start;
+  justify-self: start;
 
-    font-size: 15px;
-    font-weight: 800;
+  font-size: 15px;
+  font-weight: 800;
 
-    letter-spacing: 4px;
+  letter-spacing: 4px;
 }
 
 .brand span {
-    color: var(--warm);
+  color: var(--warm);
 }
 
 .top-center {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-    color:
-        rgba(255,255,255,.52);
+  color: rgba(255, 255, 255, 0.52);
 
-    font-size: 8px;
+  font-size: 8px;
 
-    letter-spacing: 2.5px;
+  letter-spacing: 2.5px;
+}
+
+#time {
+  font-size: 15px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.time-badge {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 20px;
+
+  padding: 32px 46px;
+
+  margin-bottom: 32px;
+
+  border-radius: 26px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  backdrop-filter: blur(9px) saturate(130%);
+
+  -webkit-backdrop-filter: blur(9px) saturate(130%);
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.time-badge #time {
+  font-size: 46px;
 }
 
 .separator {
-    color:
-        rgba(255,255,255,.22);
+  color: rgba(255, 255, 255, 0.22);
 }
 
 .live-dot {
-    width: 6px;
-    height: 6px;
+  width: 13px;
+  height: 13px;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background: #79c98a;
+  background: #79c98a;
 
-    box-shadow:
-        0 0 12px
-        rgba(121,201,138,.9);
+  box-shadow: 0 0 16px rgba(121, 201, 138, 0.9);
 
-    animation:
-        livePulse 2s ease-in-out infinite;
+  animation: livePulse 2s ease-in-out infinite;
 }
 
 @keyframes livePulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-    0%,
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: .35;
-        transform: scale(.7);
-    }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
 }
 
 .image-counter {
-    justify-self: end;
+  justify-self: end;
 
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-    color:
-        rgba(255,255,255,.48);
+  color: rgba(255, 255, 255, 0.48);
 
-    font-size: 8px;
+  font-size: 8px;
 
-    letter-spacing: 2px;
+  letter-spacing: 2px;
 }
 
 .counter-line {
-    width: 35px;
-    height: 1px;
+  width: 35px;
+  height: 1px;
 
-    background:
-        rgba(255,255,255,.25);
+  background: rgba(255, 255, 255, 0.25);
 }
 
+.add-image-button {
+  width: 18px;
+  height: 18px;
+
+  margin-left: 4px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 11px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.add-image-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+
+  border-color: rgba(255, 255, 255, 0.35);
+
+  color: white;
+}
 
 /* =====================================================
    MAIN
 ===================================================== */
 
 .screen {
-    position: fixed;
-    inset: 0;
+  position: fixed;
+  inset: 0;
 
-    z-index: 10;
+  z-index: 10;
 
-    pointer-events: none;
+  pointer-events: none;
 }
-
 
 /* =====================================================
    LEFT
 ===================================================== */
 
 .left-content {
-    position: absolute;
+  position: absolute;
 
-    left: 6vw;
-    top: 50%;
+  left: 6vw;
+  top: 50%;
 
-    width: min(470px, 38vw);
+  width: min(470px, 38vw);
 
-    transform:
-        translateY(-50%);
+  transform: translateY(-50%);
 
-    pointer-events: auto;
+  pointer-events: auto;
 
-    animation:
-        contentIn 1.2s
-        cubic-bezier(.2,.8,.2,1)
-        both;
+  animation: contentIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 @keyframes contentIn {
+  from {
+    opacity: 0;
 
-    from {
-        opacity: 0;
+    transform: translateY(calc(-50% + 30px));
+  }
 
-        transform:
-            translateY(
-                calc(-50% + 30px)
-            );
-    }
+  to {
+    opacity: 1;
 
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(-50%);
-    }
+    transform: translateY(-50%);
+  }
 }
 
 .eyebrow {
-    display: flex;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 
-    gap: 12px;
+  align-items: center;
 
-    color: var(--warm);
+  gap: 12px;
 
-    font-size: 9px;
+  color: var(--warm);
 
-    font-weight: 600;
+  font-size: 9px;
 
-    letter-spacing: 3px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  overflow-wrap: break-word;
 }
 
 .eyebrow::before {
-    content: "";
+  content: "";
 
-    width: 28px;
-    height: 1px;
+  width: 28px;
+  height: 1px;
 
-    background:
-        var(--warm);
+  background: var(--warm);
 }
-
 
 /* =====================================================
    QUOTES
 ===================================================== */
 
 .quote-area {
-    position: relative;
+  position: relative;
 
-    margin-top: 35px;
+  margin-top: 35px;
 
-    padding-left: 22px;
+  padding-left: 22px;
 
-    max-width: 430px;
+  max-width: 430px;
 
-    border-left:
-        1px solid
-        rgba(215,166,106,.48);
+  border-left: 1px solid rgba(215, 166, 106, 0.48);
 }
 
 .quote-mark {
-    position: absolute;
+  position: absolute;
 
-    top: -18px;
-    left: -10px;
+  top: -18px;
+  left: -10px;
 
-    color:
-        rgba(215,166,106,.5);
+  color: rgba(215, 166, 106, 0.5);
 
-    font-size: 38px;
+  font-size: 38px;
 }
 
 .quote-area p {
-    color:
-        rgba(243,240,233,.78);
+  color: rgba(243, 240, 233, 0.78);
 
-    font-size:
-        clamp(25px, 3vw, 43px);
+  font-size: clamp(25px, 3vw, 43px);
 
-    font-weight: 500;
+  font-weight: 500;
 
-    line-height: 1.12;
+  line-height: 1.12;
 
-    letter-spacing: -1.5px;
+  letter-spacing: -1.5px;
 
-    text-shadow:
-        0 8px 40px
-        rgba(0,0,0,.4);
+  overflow-wrap: break-word;
 
-    transition:
-        opacity .5s ease,
-        transform .5s ease;
+  text-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 
 .quote-area p.fade {
-    opacity: 0;
-    transform: translateY(10px);
+  opacity: 0;
+  transform: translateY(10px);
 }
 
 .meta {
-    margin-top: 30px;
+  margin-top: 30px;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 
-    gap: 10px;
+  align-items: center;
 
-    color:
-        rgba(255,255,255,.36);
+  gap: 10px;
 
-    font-size: 7px;
+  color: rgba(255, 255, 255, 0.36);
 
-    letter-spacing: 2.5px;
+  font-size: 7px;
+
+  letter-spacing: 2.5px;
 }
-
 
 /* =====================================================
    GLASS PLAYER
 ===================================================== */
 
 .music-player {
-    position: absolute;
+  position: absolute;
 
-    top: 50%;
-    right: 7vw;
+  top: 50%;
+  right: 7vw;
 
-    width: 430px;
-    height: 550px;
+  width: 430px;
+  min-height: 550px;
 
-    transform:
-        translateY(-50%);
+  max-height: calc(100vh - 60px);
 
-    padding:
-        35px 45px;
+  overflow-y: auto;
+  overflow-x: hidden;
 
-    display: flex;
-    flex-direction: column;
+  transform: translateY(-50%);
 
-    align-items: center;
-    justify-content: center;
+  padding: 35px 45px;
 
-    border-radius: 40px;
+  display: flex;
+  flex-direction: column;
 
-    background:
-        rgba(255,255,255,.012);
+  align-items: center;
+  justify-content: center;
 
-    border:
-        1px solid
-        rgba(255,255,255,.18);
+  border-radius: 40px;
 
-    backdrop-filter:
-        blur(7px)
-        saturate(125%);
+  background: rgba(255, 255, 255, 0.012);
 
-    -webkit-backdrop-filter:
-        blur(7px)
-        saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 
-    box-shadow:
-        0 40px 120px
-        rgba(0,0,0,.25),
+  backdrop-filter: blur(7px) saturate(125%);
 
-        inset 0 1px 0
-        rgba(255,255,255,.22),
+  -webkit-backdrop-filter: blur(7px) saturate(125%);
 
-        inset 0 -1px 0
-        rgba(255,255,255,.035);
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.035);
 
-    overflow: visible;
+  overflow: visible;
 
-    pointer-events: auto;
+  pointer-events: auto;
 
-    animation:
-        playerIn 1.2s
-        .15s
-        cubic-bezier(.2,.8,.2,1)
-        both;
+  animation: playerIn 1.2s 0.15s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 @keyframes playerIn {
+  from {
+    opacity: 0;
 
-    from {
-        opacity: 0;
+    transform: translateY(-50%) translateX(30px) scale(0.97);
+  }
 
-        transform:
-            translateY(-50%)
-            translateX(30px)
-            scale(.97);
-    }
+  to {
+    opacity: 1;
 
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(-50%)
-            translateX(0)
-            scale(1);
-    }
+    transform: translateY(-50%) translateX(0) scale(1);
+  }
 }
 
 .glass-light {
-    position: absolute;
+  position: absolute;
 
-    z-index: 0;
+  z-index: 0;
 
-    width: 380px;
-    height: 380px;
+  width: 380px;
+  height: 380px;
 
-    top: -190px;
-    left: -140px;
+  top: -190px;
+  left: -140px;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,220,175,.10),
-            rgba(215,166,106,.025) 35%,
-            transparent 70%
-        );
+  background: radial-gradient(
+    circle,
+    rgba(255, 220, 175, 0.1),
+    rgba(215, 166, 106, 0.025) 35%,
+    transparent 70%
+  );
 
-    filter: blur(28px);
+  filter: blur(28px);
 
-    pointer-events: none;
+  pointer-events: none;
 
-    animation:
-        glassDrift 9s ease-in-out infinite;
+  animation: glassDrift 9s ease-in-out infinite;
 }
 
 @keyframes glassDrift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
 
-    0%,
-    100% {
-        transform: translate(0,0);
-    }
-
-    50% {
-        transform:
-            translate(180px,100px);
-    }
+  50% {
+    transform: translate(180px, 100px);
+  }
 }
 
 .music-player::before {
-    content: "";
+  content: "";
 
-    position: absolute;
+  position: absolute;
 
-    inset: 0;
+  inset: 0;
 
-    z-index: 1;
+  z-index: 1;
 
-    border-radius: inherit;
+  border-radius: inherit;
 
-    pointer-events: none;
+  pointer-events: none;
 
-    background:
-        linear-gradient(
-            125deg,
-            rgba(255,255,255,.11),
-            rgba(255,255,255,.015) 22%,
-            transparent 43%,
-            transparent 75%,
-            rgba(255,255,255,.035)
-        );
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.11),
+    rgba(255, 255, 255, 0.015) 22%,
+    transparent 43%,
+    transparent 75%,
+    rgba(255, 255, 255, 0.035)
+  );
 }
 
 .music-player::after {
-    content: "";
+  content: "";
 
-    position: absolute;
+  position: absolute;
 
-    inset: 1px;
+  inset: 1px;
 
-    z-index: 1;
+  z-index: 1;
 
-    border-radius: 39px;
+  border-radius: 39px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.035);
+  border: 1px solid rgba(255, 255, 255, 0.035);
 
-    pointer-events: none;
+  pointer-events: none;
 }
-
 
 /* =====================================================
    VINYL
 ===================================================== */
 
 .player-disc {
-    position: relative;
+  position: relative;
 
-    z-index: 5;
+  z-index: 5;
 
-    width: 245px;
-    height: 245px;
+  width: 245px;
+  height: 245px;
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .disc {
-    position: relative;
+  position: relative;
 
-    width: 220px;
-    height: 220px;
+  width: 220px;
+  height: 220px;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background:
-        repeating-radial-gradient(
-            circle,
-            #090a0d 0px,
-            #090a0d 2px,
-            #1b1c21 3px,
-            #0b0c10 5px
-        );
+  background: repeating-radial-gradient(
+    circle,
+    #090a0d 0px,
+    #090a0d 2px,
+    #1b1c21 3px,
+    #0b0c10 5px
+  );
 
-    border:
-        1px solid
-        rgba(255,255,255,.14);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 
-    box-shadow:
-        0 25px 60px
-        rgba(0,0,0,.55),
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.55),
+    inset 0 0 30px rgba(255, 255, 255, 0.04);
 
-        inset 0 0 30px
-        rgba(255,255,255,.04);
+  animation: discSpin 10s linear infinite;
 
-    animation:
-        discSpin 10s linear infinite;
-
-    animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 @keyframes discSpin {
+  from {
+    transform: rotate(0deg);
+  }
 
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .disc-groove {
-    position: absolute;
+  position: absolute;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    border:
-        1px solid
-        rgba(255,255,255,.035);
+  border: 1px solid rgba(255, 255, 255, 0.035);
 }
 
 .groove-one {
-    inset: 16px;
+  inset: 16px;
 }
 
 .groove-two {
-    inset: 35px;
+  inset: 35px;
 }
 
 .groove-three {
-    inset: 54px;
+  inset: 54px;
 }
 
 .disc-center {
-    position: absolute;
+  position: absolute;
 
-    left: 50%;
-    top: 50%;
+  left: 50%;
+  top: 50%;
 
-    width: 72px;
-    height: 72px;
+  width: 72px;
+  height: 72px;
 
-    transform:
-        translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            var(--warm-light),
-            var(--warm) 45%,
-            #704c2d
-        );
+  background: radial-gradient(
+    circle at 35% 30%,
+    var(--warm-light),
+    var(--warm) 45%,
+    #704c2d
+  );
 
-    color: #16100a;
+  color: #16100a;
 
-    font-size: 8px;
+  font-size: 8px;
 
-    font-weight: 900;
+  font-weight: 900;
 
-    letter-spacing: 2px;
+  letter-spacing: 2px;
 }
 
 .disc-center::after {
-    content: "";
+  content: "";
 
-    position: absolute;
+  position: absolute;
 
-    width: 6px;
-    height: 6px;
+  width: 6px;
+  height: 6px;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background: #24180e;
+  background: #24180e;
 }
-
 
 /* =====================================================
    SONG INFO
 ===================================================== */
 
 .player-info {
-    position: relative;
+  position: relative;
 
-    z-index: 5;
+  z-index: 5;
 
-    width: 100%;
+  width: 100%;
 
-    text-align: center;
+  text-align: center;
 }
 
 .player-kicker {
-    margin-bottom: 9px;
+  margin-bottom: 9px;
 
-    color: var(--warm);
+  color: var(--warm);
 
-    font-size: 8px;
+  font-size: 8px;
 
-    letter-spacing: 3px;
+  letter-spacing: 3px;
 }
 
 .track-name {
-    width: 100%;
+  width: 100%;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    text-overflow: ellipsis;
+  text-overflow: ellipsis;
 
-    white-space: nowrap;
+  white-space: nowrap;
 
-    color:
-        rgba(255,255,255,.92);
+  color: rgba(255, 255, 255, 0.92);
 
-    font-size: 16px;
+  font-size: 16px;
 
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .track-status {
-    margin-top: 6px;
+  margin-top: 6px;
 
-    color:
-        rgba(255,255,255,.36);
+  color: rgba(255, 255, 255, 0.36);
 
-    font-size: 7px;
+  font-size: 7px;
 
-    letter-spacing: 2px;
+  letter-spacing: 2px;
 }
-
 
 /* =====================================================
    PROGRESS
 ===================================================== */
 
 .progress-container {
-    position: relative;
+  position: relative;
 
-    z-index: 5;
+  z-index: 5;
 
-    width: 100%;
-    height: 3px;
+  width: 100%;
+  height: 3px;
 
-    margin-top: 22px;
+  margin-top: 22px;
 
-    border-radius: 20px;
+  border-radius: 20px;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    background:
-        rgba(255,255,255,.09);
+  background: rgba(255, 255, 255, 0.09);
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .progress {
-    width: 0%;
-    height: 100%;
+  width: 0%;
+  height: 100%;
 
-    background:
-        linear-gradient(
-            90deg,
-            #986841,
-            #e6bb7e
-        );
+  background: linear-gradient(90deg, #986841, #e6bb7e);
 
-    transition:
-        width .2s linear;
+  transition: width 0.2s linear;
 }
-
 
 /* =====================================================
    CONTROLS
 ===================================================== */
 
 .controls {
-    position: relative;
+  position: relative;
 
-    z-index: 5;
+  z-index: 5;
 
-    margin-top: 22px;
+  margin-top: 22px;
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
+  align-items: center;
 
-    justify-content: center;
+  justify-content: center;
 
-    gap: 20px;
+  gap: 20px;
 }
 
 .controls button {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 
-    border:
-        1px solid
-        rgba(255,255,255,.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background:
-        rgba(255,255,255,.025);
+  background: rgba(255, 255, 255, 0.025);
 
-    color:
-        rgba(255,255,255,.62);
+  color: rgba(255, 255, 255, 0.62);
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 15px;
+  font-size: 15px;
 
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        color .2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .controls button:hover {
-    transform: scale(1.08);
+  transform: scale(1.08);
 
-    background:
-        rgba(255,255,255,.09);
+  background: rgba(255, 255, 255, 0.09);
 
-    color: white;
+  color: white;
 }
 
 .controls button:active {
-    transform: scale(.92);
+  transform: scale(0.92);
 }
 
 .controls .play-button {
-    width: 58px;
-    height: 58px;
+  width: 58px;
+  height: 58px;
 
-    background:
-        rgba(245,241,232,.94);
+  background: rgba(245, 241, 232, 0.94);
 
-    color: #111318;
+  color: #111318;
 
-    border-color:
-        rgba(255,255,255,.55);
+  border-color: rgba(255, 255, 255, 0.55);
 }
 
 .controls .play-button:hover {
-    background: white;
+  background: white;
 }
-
 
 /* =====================================================
    SELECTOR BUTTONS
 ===================================================== */
 
 .selector-button {
-    position: relative;
+  position: relative;
 
-    z-index: 10;
+  z-index: 10;
 
-    margin-top: 14px;
+  margin-top: 10px;
 
-    min-width: 170px;
-    height: 30px;
+  min-width: 170px;
+  max-width: 100%;
 
-    padding:
-        0 13px;
+  height: 30px;
 
-    display: flex;
+  padding: 0 13px;
 
-    align-items: center;
-    justify-content: center;
+  display: flex;
 
-    gap: 8px;
+  align-items: center;
+  justify-content: center;
 
-    border:
-        1px solid
-        rgba(255,255,255,.10);
+  gap: 8px;
 
-    border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
-    background:
-        rgba(255,255,255,.025);
+  border-radius: 20px;
 
-    color:
-        rgba(255,255,255,.50);
+  background: rgba(255, 255, 255, 0.025);
 
-    cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
 
-    font-size: 7px;
+  cursor: pointer;
 
-    letter-spacing: 2px;
+  font-size: 7px;
 
-    transition:
-        background .2s ease,
-        border-color .2s ease,
-        color .2s ease;
+  letter-spacing: 2px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.selector-label {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  min-width: 0;
 }
 
 .selector-button:hover {
-    background:
-        rgba(255,255,255,.07);
+  background: rgba(255, 255, 255, 0.07);
 
-    border-color:
-        rgba(255,255,255,.22);
+  border-color: rgba(255, 255, 255, 0.22);
 
-    color: white;
+  color: white;
 }
 
 .selector-arrow {
-    transition:
-        transform .25s ease;
+  transition: transform 0.25s ease;
 }
 
-.music-player.playlist-open
-.playlist-selector-arrow {
-    transform:
-        rotate(180deg);
+.music-player.playlist-open .playlist-selector-arrow {
+  transform: rotate(180deg);
 }
-
 
 /* =====================================================
    SONG SELECTOR
 ===================================================== */
 
 .song-selector {
-    margin-top: 8px;
+  margin-top: 8px;
 
-    min-width: 150px;
+  min-width: 150px;
 }
 
+.youtube-search-selector {
+  margin-top: 8px;
+
+  min-width: 150px;
+}
 
 /* =====================================================
    MENUS
 ===================================================== */
 
 .selector-menu {
-    position: absolute;
+  position: absolute;
 
-    z-index: 50;
+  z-index: 50;
 
-    left: 22px;
-    right: 22px;
+  left: 22px;
+  right: 22px;
 
-    bottom: 72px;
+  bottom: 72px;
 
-    max-height: 260px;
+  max-height: 260px;
 
-    padding: 12px;
+  padding: 12px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 
-    border-radius: 18px;
+  border-radius: 18px;
 
-    background:
-        rgba(7,8,11,.52);
+  background: rgba(7, 8, 11, 0.52);
 
-    backdrop-filter:
-        blur(18px);
+  backdrop-filter: blur(18px);
 
-    -webkit-backdrop-filter:
-        blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 
-    box-shadow:
-        0 20px 60px
-        rgba(0,0,0,.40);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 
-    opacity: 0;
+  opacity: 0;
 
-    visibility: hidden;
+  visibility: hidden;
 
-    pointer-events: none;
+  pointer-events: none;
 
-    transform:
-        translateY(8px)
-        scale(.98);
+  transform: translateY(8px) scale(0.98);
 
-    transition:
-        opacity .25s ease,
-        visibility .25s ease,
-        transform .25s ease;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease,
+    transform 0.25s ease;
 }
 
-.music-player.playlist-open
-.playlist-menu,
+.music-player.playlist-open .playlist-menu,
+.music-player.song-open .song-menu,
+.music-player.youtube-search-open .youtube-search-menu {
+  opacity: 1;
 
-.music-player.song-open
-.song-menu {
-    opacity: 1;
+  visibility: visible;
 
-    visibility: visible;
+  pointer-events: auto;
 
-    pointer-events: auto;
-
-    transform:
-        translateY(0)
-        scale(1);
+  transform: translateY(0) scale(1);
 }
 
 .song-menu {
-    bottom: 72px;
+  bottom: 72px;
 }
 
+.youtube-search-menu {
+  bottom: 72px;
+
+  max-height: 320px;
+}
 
 /* =====================================================
    MENU HEADER
 ===================================================== */
 
 .menu-header {
-    display: flex;
+  display: flex;
 
-    justify-content: space-between;
+  justify-content: space-between;
 
-    padding:
-        5px 7px 10px;
+  padding: 5px 7px 10px;
 
-    color:
-        rgba(255,255,255,.42);
+  color: rgba(255, 255, 255, 0.42);
 
-    font-size: 7px;
+  font-size: 7px;
 
-    letter-spacing: 2px;
+  letter-spacing: 2px;
 
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .menu-items {
-    max-height: 205px;
+  max-height: 205px;
 
-    overflow-y: auto;
+  overflow-y: auto;
 
-    padding-top: 5px;
+  padding-top: 5px;
 }
 
 .menu-items::-webkit-scrollbar {
-    width: 3px;
+  width: 3px;
 }
 
 .menu-items::-webkit-scrollbar-thumb {
-    background:
-        rgba(255,255,255,.18);
+  background: rgba(255, 255, 255, 0.18);
 
-    border-radius: 20px;
+  border-radius: 20px;
 }
-
 
 /* =====================================================
    MENU ITEM
 ===================================================== */
 
 .menu-item {
-    width: 100%;
+  width: 100%;
 
-    min-height: 36px;
+  min-height: 36px;
 
-    padding:
-        0 8px;
+  padding: 0 8px;
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
+  align-items: center;
 
-    gap: 10px;
+  gap: 10px;
 
-    border: 0;
+  border: 0;
 
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.035);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.035);
 
-    background:
-        transparent;
+  background: transparent;
 
-    color:
-        rgba(255,255,255,.50);
+  color: rgba(255, 255, 255, 0.5);
 
-    cursor: pointer;
+  cursor: pointer;
 
-    text-align: left;
+  text-align: left;
 
-    transition:
-        background .2s ease,
-        color .2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .menu-item:hover {
-    background:
-        rgba(255,255,255,.06);
+  background: rgba(255, 255, 255, 0.06);
 
-    color: white;
+  color: white;
 }
 
 .menu-item.active {
-    background:
-        rgba(215,166,106,.07);
+  background: rgba(215, 166, 106, 0.07);
 
-    color:
-        var(--warm);
+  color: var(--warm);
 }
 
 .menu-number {
-    width: 25px;
+  width: 25px;
 
-    flex-shrink: 0;
+  flex-shrink: 0;
 
-    color:
-        rgba(255,255,255,.25);
+  color: rgba(255, 255, 255, 0.25);
 
-    font-size: 7px;
+  font-size: 7px;
 }
 
-.menu-item.active
-.menu-number {
-    color:
-        var(--warm);
+.menu-item.active .menu-number {
+  color: var(--warm);
 }
 
 .menu-title {
-    overflow: hidden;
+  overflow: hidden;
 
-    text-overflow: ellipsis;
+  text-overflow: ellipsis;
 
-    white-space: nowrap;
+  white-space: nowrap;
 
-    font-size: 9px;
+  font-size: 9px;
 }
 
+/* =====================================================
+   YOUTUBE SEARCH RESULTS
+===================================================== */
+
+.yt-result {
+  width: 100%;
+
+  min-height: 46px;
+
+  padding: 6px 8px;
+
+  display: flex;
+
+  align-items: center;
+  gap: 10px;
+
+  border: 0;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.yt-result:hover {
+  background: rgba(255, 255, 255, 0.06);
+
+  color: white;
+}
+
+.yt-result-thumb {
+  width: 44px;
+  height: 33px;
+
+  flex-shrink: 0;
+
+  border-radius: 6px;
+
+  object-fit: cover;
+
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.yt-result-text {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.yt-result-title {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  font-size: 9px;
+
+  color: inherit;
+}
+
+.yt-result-channel {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  font-size: 7px;
+
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.yt-search-empty {
+  padding: 16px 8px;
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+
+  color: rgba(255, 255, 255, 0.3);
+
+  text-align: center;
+}
+
+/* =====================================================
+   MENU SEARCH
+===================================================== */
+
+.menu-search {
+  display: flex;
+
+  align-items: center;
+  gap: 8px;
+
+  margin: 8px 2px 2px;
+
+  padding: 6px 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.menu-search-icon {
+  color: rgba(255, 255, 255, 0.35);
+
+  font-size: 11px;
+}
+
+.menu-search input {
+  flex: 1;
+
+  border: 0;
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.85);
+
+  font-size: 9px;
+
+  letter-spacing: 1px;
+
+  outline: none;
+
+  font-family: inherit;
+}
+
+.menu-search input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* =====================================================
+   ADD PLAYLIST
+===================================================== */
+
+.menu-add-button {
+  width: 100%;
+
+  margin-top: 8px;
+
+  padding: 9px 8px;
+
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 8px;
+
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.menu-add-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+
+  border-color: rgba(255, 255, 255, 0.32);
+
+  color: white;
+}
+
+.menu-add-form {
+  display: none;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-top: 8px;
+
+  padding: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.menu-add-form.open {
+  display: flex;
+}
+
+.menu-add-form input {
+  width: 100%;
+
+  padding: 8px 9px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  color: rgba(255, 255, 255, 0.85);
+
+  font-size: 9px;
+
+  letter-spacing: 0.5px;
+
+  outline: none;
+
+  font-family: inherit;
+}
+
+.menu-add-form input::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.menu-add-form button {
+  padding: 8px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: var(--warm);
+
+  color: #1a120a;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+
+  transition: opacity 0.2s ease;
+}
+
+.menu-add-form button:hover {
+  opacity: 0.85;
+}
 
 /* =====================================================
    PLAYING STATE
 ===================================================== */
 
 .music-player.playing {
-    border-color:
-        rgba(255,255,255,.26);
+  border-color: rgba(255, 255, 255, 0.26);
 
-    box-shadow:
-        0 40px 120px
-        rgba(0,0,0,.30),
-
-        inset 0 1px 0
-        rgba(255,255,255,.25);
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .music-player.playing .disc {
-    animation-play-state: running;
+  animation-play-state: running;
 }
 
 .music-player.playing .player-kicker {
-    animation:
-        playerPulse 2s ease-in-out infinite;
+  animation: playerPulse 2s ease-in-out infinite;
 }
 
 @keyframes playerPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
 
-    0%,
-    100% {
-        opacity: .55;
-    }
-
-    50% {
-        opacity: 1;
-    }
+  50% {
+    opacity: 1;
+  }
 }
-
 
 /* =====================================================
    PLAYLIST NAME
 ===================================================== */
 
 .playlist-name {
-    position: relative;
+  position: relative;
 
-    z-index: 5;
+  z-index: 5;
 
-    margin-top: 11px;
+  margin-top: 11px;
 
-    color:
-        rgba(255,255,255,.24);
+  color: rgba(255, 255, 255, 0.24);
 
-    font-size: 7px;
+  font-size: 7px;
 
-    letter-spacing: 3px;
+  letter-spacing: 3px;
 }
-
 
 /* =====================================================
    BOTTOM
 ===================================================== */
 
 .bottom-info {
-    position: fixed;
+  position: fixed;
 
-    z-index: 30;
+  z-index: 30;
 
-    left: 42px;
-    bottom: 30px;
+  left: 42px;
+  bottom: 30px;
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
+  align-items: center;
 
-    gap: 12px;
+  gap: 12px;
 
-    color:
-        rgba(255,255,255,.32);
+  color: rgba(255, 255, 255, 0.32);
 
-    font-size: 7px;
+  font-size: 7px;
 
-    letter-spacing: 2.5px;
+  letter-spacing: 2.5px;
 }
 
 .bottom-line {
-    width: 35px;
-    height: 1px;
+  width: 35px;
+  height: 1px;
 
-    background:
-        rgba(255,255,255,.22);
+  background: rgba(255, 255, 255, 0.22);
 }
-
 
 /* =====================================================
    YOUTUBE
 ===================================================== */
 
 #youtube-player {
-    position: fixed;
+  position: fixed;
 
-    width: 1px;
-    height: 1px;
+  width: 1px;
+  height: 1px;
 
-    right: 0;
-    bottom: 0;
+  right: 0;
+  bottom: 0;
 
-    opacity: 0;
+  opacity: 0;
 
-    pointer-events: none;
+  pointer-events: none;
 }
-
 
 /* =====================================================
    TABLET
 ===================================================== */
 
 @media (max-width: 1100px) {
+  .music-player {
+    right: 4vw;
 
-    .music-player {
-        right: 4vw;
+    width: 380px;
+    min-height: 520px;
+  }
 
-        width: 380px;
-        height: 520px;
-    }
+  .left-content {
+    left: 5vw;
 
-    .left-content {
-        left: 5vw;
-
-        width: 40vw;
-    }
+    width: 40vw;
+  }
 }
-
 
 /* =====================================================
    MOBILE
 ===================================================== */
 
 @media (max-width: 700px) {
+  .top-bar {
+    height: 65px;
 
-    .top-bar {
-        height: 65px;
+    padding: 0 18px;
 
-        padding:
-            0 18px;
+    grid-template-columns: 1fr auto;
+  }
 
-        grid-template-columns:
-            1fr auto;
-    }
+  .top-center {
+    display: none;
+  }
 
-    .top-center {
-        display: none;
-    }
+  .left-content {
+    left: 20px;
+    right: 20px;
 
-    .left-content {
-        left: 20px;
-        right: 20px;
+    top: 10%;
 
-        top: 10%;
+    width: auto;
 
-        width: auto;
+    transform: none;
+  }
 
-        transform: none;
-    }
+  .quote-area {
+    margin-top: 25px;
 
-    .quote-area {
-        margin-top: 25px;
+    max-width: 300px;
+  }
 
-        max-width: 300px;
-    }
+  .time-badge {
+    padding: 22px 30px;
 
-    .quote-area p {
-        font-size: 25px;
-    }
+    gap: 14px;
 
-    .music-player {
-        left: 50%;
-        right: auto;
+    margin-bottom: 20px;
+  }
 
-        top: auto;
-        bottom: 12px;
+  .time-badge #time {
+    font-size: 32px;
+  }
 
-        width:
-            calc(100% - 24px);
+  .quote-area p {
+    font-size: 25px;
+  }
 
-        height: 405px;
+  .music-player {
+    left: 50%;
+    right: auto;
 
-        padding:
-            20px 25px;
+    top: auto;
+    bottom: 12px;
 
-        border-radius: 28px;
+    width: calc(100% - 24px);
 
-        transform:
-            translateX(-50%);
-    }
+    min-height: 405px;
 
-    .player-disc {
-        width: 145px;
-        height: 145px;
-    }
+    max-height: calc(100vh - 90px);
 
-    .disc {
-        width: 135px;
-        height: 135px;
-    }
+    overflow-y: auto;
 
-    .disc-center {
-        width: 48px;
-        height: 48px;
-    }
+    padding: 20px 25px;
 
-    .selector-menu {
-        left: 15px;
-        right: 15px;
-    }
+    border-radius: 28px;
 
-    .bottom-info {
-        display: none;
-    }
+    transform: translateX(-50%);
+  }
+
+  .player-disc {
+    width: 145px;
+    height: 145px;
+  }
+
+  .disc {
+    width: 135px;
+    height: 135px;
+  }
+
+  .disc-center {
+    width: 48px;
+    height: 48px;
+  }
+
+  .selector-menu {
+    left: 15px;
+    right: 15px;
+  }
+
+  .bottom-info {
+    display: none;
+  }
+}
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 420px) {
+  .top-bar {
+    padding: 0 14px;
+  }
+
+  .brand {
+    font-size: 13px;
+
+    letter-spacing: 2px;
+  }
+
+  .image-counter {
+    gap: 6px;
+
+    font-size: 7px;
+  }
+
+  .eyebrow {
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    gap: 8px;
+  }
+
+  .eyebrow::before {
+    width: 18px;
+  }
+
+  .quote-area {
+    margin-top: 18px;
+
+    padding-left: 16px;
+
+    max-width: 100%;
+  }
+
+  .quote-area p {
+    font-size: 21px;
+
+    letter-spacing: -0.8px;
+  }
+
+  .quote-mark {
+    font-size: 30px;
+
+    top: -14px;
+    left: -8px;
+  }
+
+  .meta {
+    margin-top: 18px;
+
+    font-size: 6.5px;
+
+    gap: 6px;
+  }
+
+  .time-badge {
+    padding: 17px 22px;
+
+    gap: 11px;
+
+    margin-bottom: 16px;
+  }
+
+  .time-badge #time {
+    font-size: 24px;
+  }
+
+  .live-dot {
+    width: 9px;
+    height: 9px;
+  }
+
+  .music-player {
+    padding: 16px 18px;
+
+    min-height: 380px;
+  }
+
+  .selector-button {
+    min-width: 0;
+
+    width: 100%;
+
+    font-size: 6.5px;
+  }
+
+  .player-info {
+    margin-top: 12px;
+  }
+
+  .track-name {
+    font-size: 15px;
+  }
 }
