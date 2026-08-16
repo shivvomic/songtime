@@ -371,7 +371,11 @@ function initializePlaylist() {
 
   updatePlaylistUI();
 
-  window.youtubePlaylistId = getPlaylistId(valid[0].url);
+  const playlistId = getPlaylistId(valid[0].url);
+
+  currentPlaylistId = playlistId;
+
+  window.youtubePlaylistId = playlistId;
 }
 
 /* =========================================================
