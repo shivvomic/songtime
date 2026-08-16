@@ -1,33 +1,42 @@
 export default async function handler(req, res) {
+  const playlistId = req.query.playlist;
 
-    const playlistId = req.query.playlist;
+  const key = process.env.YOUTUBE_API_KEY;
 
-    const key = process.env.YOUTUBE_API_KEY;
+  const baseUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${key}`;
 
-    const url =
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${key}`;
+  let songs = [];
 
+  let pageToken = "";
 
-    const response = await fetch(url);
+  try {
+    do {
+      const url = pageToken ? `${baseUrl}&pageToken=${pageToken}` : baseUrl;
 
-    const data = await response.json();
+      const response = await fetch(url);
 
+      const data = await response.json();
 
-    console.log(data);
-
-
-    if (!data.items) {
+      if (!data.items) {
         return res.status(500).json({
-            error: data
+          error: data,
         });
-    }
+      }
 
-
-    const songs = data.items.map(item => ({
+      const pageSongs = data.items.map((item) => ({
         id: item.snippet.resourceId.videoId,
-        title: item.snippet.title
-    }));
+        title: item.snippet.title,
+      }));
 
+      songs = songs.concat(pageSongs);
+
+      pageToken = data.nextPageToken || "";
+    } while (pageToken);
 
     res.status(200).json(songs);
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
 }
