@@ -55,11 +55,11 @@ const playlists = [
 
 const artworks = [
 
-    "./assets/artwork/student-study.png",
-    "./assets/artwork/02.jpg",
-    "./assets/artwork/03.jpg",
-    "./assets/artwork/04.jpg",
-    "./assets/artwork/05.jpg"
+    "./assets/artwork/student-study.png"
+    // "./assets/artwork/02.jpg",
+    // "./assets/artwork/03.jpg",
+    // "./assets/artwork/04.jpg",
+    // "./assets/artwork/05.jpg"
 
 ];
 
