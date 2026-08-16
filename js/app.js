@@ -101,7 +101,7 @@ const songArtwork = {
 
 const artworks = [
   "./assets/artwork/student-study.png",
-  "./assets/artwork/shivam-study-hero.png",
+  // "./assets/artwork/02.jpg",
   // "./assets/artwork/03.jpg",
   // "./assets/artwork/04.jpg",
   // "./assets/artwork/05.jpg"
@@ -147,8 +147,6 @@ artworks.push(...loadCustomArtwork());
 
    15000 = 15 seconds
 */
-
-const ARTWORK_INTERVAL = 15000;
 
 /*
    Quote change interval.
@@ -198,13 +196,15 @@ let currentPlaylist = 0;
 
 let currentTrack = 0;
 
+let currentPlaylistId = null;
+
+let playingOneOff = false;
+
 let currentArtwork = 0;
 
 let currentQuote = 0;
 
 let progressTimer = null;
-
-let artworkTimer = null;
 
 let lastCustomArtworkVideoId = null;
 
@@ -503,6 +503,10 @@ function switchPlaylist(index) {
     return;
   }
 
+  currentPlaylistId = playlistId;
+
+  playingOneOff = false;
+
   trackStatus.textContent = "LOADING PLAYLIST";
 
   isPlaying = false;
@@ -623,6 +627,37 @@ function playTrack(index) {
     return;
   }
 
+  /*
+       If we were playing a one-off search result,
+       the player's internal playlist is gone —
+       reload the real playlist first so playback
+       controls work correctly again.
+    */
+
+  if (playingOneOff) {
+    if (!currentPlaylistId) {
+      return;
+    }
+
+    playingOneOff = false;
+
+    currentTrack = index;
+
+    player.loadPlaylist({
+      listType: "playlist",
+
+      list: currentPlaylistId,
+
+      index: index,
+    });
+
+    updateSongActive();
+
+    closeMenus();
+
+    return;
+  }
+
   const playlist = player.getPlaylist();
 
   if (!playlist || index < 0 || index >= playlist.length) {
@@ -644,6 +679,8 @@ function playOneOffVideo(videoId, title) {
   }
 
   currentTrack = -1;
+
+  playingOneOff = true;
 
   updateSongActive();
 
@@ -686,7 +723,7 @@ function onPlayerStateChange(event) {
 
     trackStatus.textContent = "NOW PLAYING";
 
-    const index = player.getPlaylistIndex();
+    const index = !playingOneOff ? player.getPlaylistIndex() : -1;
 
     if (typeof index === "number" && index >= 0) {
       currentTrack = index;
@@ -711,6 +748,14 @@ function onPlayerStateChange(event) {
             songArtwork[videoId],
             videoData.title ? videoData.title.toUpperCase() : "CUSTOM",
           );
+        } else if (artworks.length) {
+          /*
+                       No custom artwork set for this
+                       song — advance to the next image
+                       in the loop.
+                    */
+
+          nextArtwork();
         }
       }
     } catch (error) {
@@ -780,6 +825,12 @@ function previousTrack() {
     return;
   }
 
+  if (playingOneOff) {
+    playTrack(0);
+
+    return;
+  }
+
   player.previousVideo();
 }
 
@@ -789,6 +840,12 @@ function previousTrack() {
 
 function nextTrack() {
   if (!playerReady || !player) {
+    return;
+  }
+
+  if (playingOneOff) {
+    playTrack(0);
+
     return;
   }
 
@@ -899,8 +956,6 @@ function initializeArtwork() {
   currentArtwork = 0;
 
   showArtwork(currentArtwork, true);
-
-  artworkTimer = setInterval(nextArtwork, ARTWORK_INTERVAL);
 }
 
 function showArtwork(index, immediate = false) {
