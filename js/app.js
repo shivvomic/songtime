@@ -21,7 +21,7 @@
 
    You can keep adding playlists.
 */
-const YOUTUBE_API_KEY = "YOUR_API_KEY";
+const YOUTUBE_API_KEY = "YOUTUBE_API_KEY";
 
 const playlists = [
 
