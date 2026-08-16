@@ -303,6 +303,70 @@ function getValidPlaylists() {
 }
 
 
+function buildPlaylistSelector() {
+
+    playlistItems.innerHTML = "";
+
+
+    const valid =
+        getValidPlaylists();
+
+
+    playlistCount.textContent =
+        valid.length;
+
+
+    valid.forEach(
+        function(playlist, index) {
+
+
+            const button =
+                document.createElement("button");
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "menu-item";
+
+
+            button.innerHTML = `
+
+                <span class="menu-number">
+                    ${String(index + 1).padStart(2,"0")}
+                </span>
+
+                <span class="menu-title">
+                    ${escapeHTML(playlist.name)}
+                </span>
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function(event){
+
+                    event.stopPropagation();
+
+                    switchPlaylist(index);
+
+                }
+            );
+
+
+            playlistItems.appendChild(button);
+
+        }
+    );
+
+
+    updatePlaylistSelectorActive();
+}
+
+
 /* =========================================================
    INITIAL PLAYLIST
 ========================================================= */
